@@ -25,7 +25,7 @@ class Event_btn{
         this.e.click($("#remove"),()=>{
             // 删除掉ls中的数据
             this.cen.lS.removeOne(this.cen.sex)
-            this.cen.sex = "GPT"
+            this.cen.sex = "bing"
             this.cen.creatTags()
             this.cen.draw()
             this.e.notice("success","删除成功!")
@@ -89,13 +89,6 @@ class Event_btn{
         this.e.click($("#export"), ()=>{
             // 读取当前数据，转化为专业格式
             let val = cen.lS.read(cen.sex)
-            if (val) {
-                // @ts-ignore
-                const { model, chat } = val;
-                const message = []
-                for (let i of chat) message[message.length] = {role:i[0],content:i[1]}
-                val = { model: model, messages: message }
-            }
             // 复制到剪贴板
             this.e.copyVal(JSON.stringify(val),"已经导出到剪贴板")
         })

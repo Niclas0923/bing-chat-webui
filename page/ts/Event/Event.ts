@@ -24,6 +24,7 @@ class Events {
         });
 
         this.inputShort = this.inputA()
+        this.btnG()
     }
 
     // 发送的事件
@@ -37,7 +38,7 @@ class Events {
                 if(val){
                     // 修改发送的数据
                     // @ts-ignore 确认一定会存在这项所以直接屏蔽
-                    val.chat[val.chat.length] = ["user",input]
+                    val.history[val.history.length] = ["user",input]
                     // 将这个数据显示在显示界面上
                     this.center.card.creatM(input)
                     // 清除输入框中的数据
@@ -55,26 +56,30 @@ class Events {
                     $("#in").append(e)
                     const $l = $("#loading")
 
+                    const mod = parseInt($("#btnG .active")[0].id.slice(-1))
+                    // @ts-ignore
+                    const obj = { data : JSON.stringify(val.lastObj), model : mod, val : input,}
+
                     // 发送请求
-                    this.center.send.sendObj(val,(data:{"0":number,"1":string})=>{
+                    this.center.send.sendObj(obj,(data:any)=>{
                         this.center.searching = false
                         $l.remove()
                         // 成功则再更改数据
-                        if (data["0"] === 0){
-                            this.center.card.downLast()
-                            // 访问超时
-                            this.notice("danger","访问超时，可以尝试重复输入")
-                            this.timeout()
-                        }else if(data["0"] === 1){
+                        if (data){
                             // 返回成功
-                            this.center.card.creatC(data["1"],false)
-                            // 一言不保存
-                            if (this.center.sex !== "一言"){
-                                // @ts-ignore 确认一定会存在这项所以直接屏蔽
-                                val.chat[val.chat.length] = ["assistant",data["1"]]
-                                // 写入到cookie
-                                this.center.lS.write(this.center.sex,val)
+                            const d = ["assistant",data["text"]]
+                            if (data["detail"]["sourceAttributions"].length!=0){
+                                d[2] = data["detail"]["adaptiveCards"][0]["body"][1]["text"]
                             }
+                            this.center.card.creatC(d.length== 2?d[1]:(d[1]+"\n\n"+d[2]),false)
+                            // @ts-ignore 确认一定会存在这项所以直接屏蔽
+                            val.history[val.history.length] = d
+                            // @ts-ignore 保存这个返回对象
+                            val.lastObj = data
+                            // @ts-ignore 保存当前模式
+                            val.mod = mod
+                            // 写入到cookie
+                            this.center.lS.write(this.center.sex,val)
                             // console.log("val",val)
                         }
                     },()=>{
@@ -112,7 +117,7 @@ class Events {
     // 设置复制按钮的点击事件
     copyE(){
         const t = this
-        const $list = $("#in a")
+        const $list = $("#in .copy")
         for (let i=0;i<$list.length;i++) {
             $($list[i]).off().on("click",function () {
                 // console.log($(this).parent().find("div").html())
@@ -296,10 +301,24 @@ class Events {
         // 设置点击函数
         $("#resend").one("click",function () {
             $(".line:last .card a").remove()
+            // @ts-ignore 再次发送请求
+            t.sendEvent(String(c.send.lastSendVal["val"]))
+        })
+    }
+
+    // 按钮组
+    btnG(){
+        const t = this
+        const c = t.center
+        $("#btnG .btn").on("click",function (){
+            const val = c.lS.read(c.sex)
             // @ts-ignore
-            const val = c.send.lastSendVal["chat"][c.send.lastSendVal["chat"].length-1][1]
-            // 再次发送请求
-            t.sendEvent(String(val))
+            if (val["history"].length === 0){
+                $("#btnG .btn").removeClass("active")
+                $(this).addClass("active")
+            }else{
+                t.notice("danger","已有对话过，无法更改模式")
+            }
         })
     }
 

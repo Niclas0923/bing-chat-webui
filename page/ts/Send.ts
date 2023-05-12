@@ -7,7 +7,7 @@ class Send {
         this.url = val.url
     }
 
-    sendTools(urlAdd:string,obj:object,canCallBack:(data:{"0":number,"1":string})=>void,canNotCallBack:()=>void){
+    sendTools(obj:object,canCallBack:(data:any)=>void,canNotCallBack:()=>void){
         this.lastSendVal = obj
         console.log(obj,"send")
         $.ajax({
@@ -27,7 +27,7 @@ class Send {
                 canCallBack(d)
             },
             // 超时时间
-            timeout:310000,
+            timeout:30000,
             //失败的回调
             "error":function(jqXHR, textStatus, errorThrown){
                 console.log('请求失败：', jqXHR, textStatus, errorThrown);
@@ -36,8 +36,8 @@ class Send {
         })
     }
 
-    sendObj(obj:object,canCallBack:(data:{"0":number,"1":string})=>void,canNotCallBack:()=>void){
-        this.sendTools("chart",obj,canCallBack,canNotCallBack)
+    sendObj(obj:object,canCallBack:(data:any)=>void,canNotCallBack:()=>void){
+        this.sendTools(obj,canCallBack,canNotCallBack)
     }
 }
 

@@ -21,7 +21,7 @@ class LocalStorage {
 
     // 直接生成新的内容并写入
     creatOnce(){
-        const names = ["GPT","一言"]
+        const names = ["bing"]
         // 生成列表，生成初始
         this.write("list",{'names':names})
         for (const i of names) {
@@ -31,9 +31,10 @@ class LocalStorage {
 
 
     reset(name:string){
-        const val0:{model:string,chat:object} = {
-            "model": "gpt-3.5-turbo",
-            "chat": []
+        const val0:{history:object,lastObj:object|"null",mod:0|1|2} = {
+            "history": [],
+            "lastObj": "null",
+            "mod":1
         }
         this.write(name,val0)
     }

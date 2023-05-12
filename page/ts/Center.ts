@@ -14,7 +14,7 @@ class Center {
     // 用于记录当前是否为询问状态
     searching = false
     // 用于记录当前的属性的状态
-    sex :string = "GPT"
+    sex :string = "bing"
     constructor() {
 
         this.lS = new localStorage()
@@ -50,15 +50,12 @@ class Center {
                 a1+=`<a href="#" class="list-group-item list-group-item-action${id===this.sex?" active":""}${this.night.now?" list-group-item-dark":""}" id="${id}">${id}</a>`
             }
             $m.html(a1)
-            if (["GPT"].indexOf(this.sex) !== -1){
+            if (["bing"].indexOf(this.sex) !== -1){
                 // 前两项
                 $("#addTo,#export").removeClass("disabled")
                 this.event.btn.addTo()
                 this.event.btn.export()
                 $("#remove,#rename").addClass("disabled")
-            }else if(this.sex === "一言"){
-                // 一言
-                $("#remove,#rename,#addTo,#export").addClass("disabled")
             }else {
                 // 添加项
                 $("#rename,#remove,#export").removeClass("disabled")
@@ -78,37 +75,24 @@ class Center {
         $("#in").html("")
         // 读取当前localStorage，写入所有历史
         const nVal = this.lS.read(this.sex)
-        if (nVal!==null && this.sex !== "一言"){
+        const $btnG = $("#btnG .btn")
+        $btnG.removeClass("active")
+        // @ts-ignore
+        $($btnG[nVal["mod"]]).addClass("active")
+        if (nVal!==null){
             // @ts-ignore
-            for (const i of nVal.chat) {
+            for (const i of nVal.history) {
                 switch (i[0]) {
                     case "system":
                         this.card.creatS(i[1]);break
                     case "user":
                         this.card.creatM(i[1]);break
                     case "assistant":
-                        this.card.creatC(i[1]);break
+                        this.card.creatC(i.length == 2?i[1]:(i[1]+"\n\n"+i[2]));break
                 }
             }
         }
-        switch (this.sex) {
-            case "GPT":
-                if (!fromReSet) this.card.creatC("我已经完成了所有信息的读取，有什么问题都可以直接在下方向我提问。",false);break
-            case "一言":
-                this.card.creatS("你的回复与上下文不相关，只需要回复最后一个问题即可\n(这可以减少回复的计算时间)\n(但是问题和回复不会被记录)");break
-            default:
-                // 如果是自定义并且没有资源
-                // @ts-ignore
-                if (this.lS.read(this.sex)["chat"].length === 0){
-                    // 生成一个system框，用于提示可以输入system
-                    this.card.creatS("当前system未设置，可以点击设置，若不设置则为空，使用后不可以再进行设置设置")
-                    const sys = $(".card")[0]
-                    const cen = this
-                    $(sys).one("click",function () {
-                        cen.card.creatInput()
-                    })
-                }
-        }
+        if (!fromReSet) this.card.creatC("我已经完成了所有信息的读取，有什么问题都可以直接在下方向我提问。",false)
     }
 
 }
