@@ -22,4 +22,4 @@ shell.exec(s, (code, stdout, stderr) => {
     console.error(`stderr: ${stderr}`);
 })
 // 端口监听并释放网页
-server(config.point,config.url)
+server(config.point)

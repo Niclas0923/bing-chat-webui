@@ -20,7 +20,7 @@ shell.exec(command, options, (code, stdout, stderr) => {
     if (code === 0) {
         console.log("编译完成")
         // 修改完成后启动端口监听释放网页
-        server(config.point,config.url,config["httpsO"],config["options"])
+        server(config.point,config["httpsO"],config["options"])
     } else {
         console.error(`Command failed with exit code ${code}: ${stderr}`);
     }
