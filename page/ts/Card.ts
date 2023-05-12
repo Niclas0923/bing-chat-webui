@@ -26,6 +26,19 @@ class Card {
         const $e = $('#in .init:last')
         // 数据处理
         val = S(val).escapeHTML().s
+        const regex = /\[\d*?\.\s*(.*?)\]\((.*?)\)/g;
+        let match;
+        let count = 1;
+        while ((match = regex.exec(val)) !== null) {
+            const str = match[0];
+            const link = match[2];
+            const name = match[1];
+            const replaced = `<a href="${link}" target="_blank" title="${link}">${name}</a>`;
+            val = val.replace(str, `${count}. ${replaced}`);
+            count++;
+        }
+        const regex2 = /\[\^(\d+)\^\]/g;
+        val = val.replace(regex2, '<span class="badge rounded-pill bg-primary">$1</span>');
         const [arr1,arr2] = this.extractArray(val)
         // 根据需求选择动态显示还是直接显示
         if (fast){
@@ -66,6 +79,8 @@ class Card {
             let a2 = 0
             // 这个是当前项的长度
             let l1 = arr1[a1].length
+            // 是否出现过learn more
+            let b0 = false
             let i = setInterval(function () {
                 a2+=1
                 // console.log(a2,l1,l)
@@ -100,6 +115,10 @@ class Card {
                     valX = `<pre>${arr1[a1].substring(0, a2)}</pre>`
                 }else {
                     valX = `<pre class="pre1"><code class="${t.center.night.now?"":"hljs-w "}language-${arr2[a1]}">${arr1[a1].substring(0, a2)}</code></pre>`
+                }
+                if (/Learn more:/.test(valX) && !b0){
+                    b0 = true
+                    a2 = l1-1
                 }
                 // @ts-ignore
                 let x = t.$in.prop("scrollHeight") - t.$in.scrollTop() <= t.$in.height()+21
