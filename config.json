@@ -1,0 +1,13 @@
+{
+    "url":"",
+    "point": 18080,
+    "httpsO": false,
+    "options": {
+        "key": "",
+        "cert": ""
+    },
+    "dev": {
+        "point": 8080,
+        "host": ""
+    }
+}

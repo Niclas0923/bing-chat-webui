@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="height: 100%;overflow: auto">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/icon" href="img/01.ico">
+    <link rel ="apple-touch-icon" href ="img/02.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="language" content="Chinese">
+    <meta http-equiv="Content-Language" content="zh-CN">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>chartGPT</title>
+    <!-- popper -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/popper.js/2.11.7/umd/popper.min.js"></script>
+    <!-- jquery -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery-color/2.1.2/jquery.color.min.js"></script>
+    <!-- Bootstrap 核心 CSS 文件 -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <!-- FastClick修复延迟 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+    <script>window.onload = ()=>{FastClick.attach(document.body)}</script>
+    <!-- highlight.js代码高亮 -->
+<!--    <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.7.0/styles/default.min.css" rel="stylesheet">-->
+    <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.7.0/styles/lightfair.min.css" rel="stylesheet">
+<!--    <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css" rel="stylesheet">-->
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.7.0/languages/python.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.7.0/languages/java.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.7.0/languages/javascript.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.7.0/languages/css.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.7.0/languages/cpp.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.7.0/languages/csharp.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.7.0/languages/php.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.7.0/languages/ruby.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.7.0/languages/typescript.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.7.0/languages/bash.min.js"></script>
+    <!-- string用于处理html字符串 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/string.js/3.3.3/string.min.js" integrity="sha512-WKMq2RkmPV0fAO4vXuFP4FOJxrZEba3aFc0DIJyVPMNU0anAD+FJFJmXN1xWsD9dev+Upb0huXlrAEBWtDqubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body class="body" style="display: none">
+<nav class="bg-light" style="height: 6vh;position: relative">
+    <a href="#">
+        <img src="logo.png" alt="chartGPT">
+    </a>
+    <a href="#" class="switch" id="switchC">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-brightness-high-fill" viewBox="0 0 16 16">
+            <path d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+        </svg>
+<!--        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-moon-stars-fill" viewBox="0 0 16 16" >-->
+<!--            <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>-->
+<!--            <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>-->
+<!--        </svg>-->
+    </a>
+</nav>
+<div class="container">
+    <div style="height: 94vh" class="row">
+        <div class="col-12 col-lg-8 col-xxl-9" style="height: 100%;">
+            <div class="col-12 no-scrollbar" id="in">
+
+            </div>
+            <div class="col-12 under" style="height: 9.4vh;position: relative">
+                <div class="row">
+                    <div id="inputs" class="form-floating" style="position: relative">
+                        <textarea class="form-control textarea" placeholder="请输入问题" id="floatingTextarea2"></textarea>
+                        <label for="floatingTextarea2" class="label">请输入问题</label>
+                        <a href="#" id="send" >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                                <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4 col-xxl-3" style="height: 100%;overflow: auto">
+            <div class="col-12 offset-0 col-lg-11 offset-lg-1">
+                <div style="height: 2vh"></div>
+                <div class="tags-menu">
+                    <h5>工具</h5>
+                    <div style="height: 1vh"></div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action text-center" id="reset">清空</a>
+                                <a href="#" class="list-group-item list-group-item-action text-center" id="remove">删除</a>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action text-center disabled">导入</a>
+                                <a href="#" class="list-group-item list-group-item-action text-center" id="export">导出</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height: 1.5vh"></div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action text-center" id="rename">重命名</a>
+                                <a href="#" class="list-group-item list-group-item-action text-center" id="addTo">添加到单项</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="height: 2vh"></div>
+                <div class="tags-menu">
+                    <h5>主题</h5>
+                    <div style="height: 1vh"></div>
+                    <div class="list-group" id="tag-menu">
+                        <a href="#" class="list-group-item list-group-item-action active">GPT</a>
+                        <a href="#" class="list-group-item list-group-item-action">一言</a>
+                    </div>
+                </div>
+                <div style="height: 2vh"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 警告框 -->
+<!--<div id="alert" class="alert alert-success alert0" role="alert">复制成功！</div>-->
+
+</body>
+</html>

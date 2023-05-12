@@ -1,0 +1,214 @@
+@screen-xs: ~"only screen and (max-width: 767px)";
+@screen-sm: ~"only screen and (min-width: 768px)";
+@screen-md: ~"only screen and (min-width: 992px)";
+@screen-lg: ~"only screen and (min-width: 1200px)";
+
+.body-d{
+  //background-color: #05000c;
+  background-color: black;
+}
+.body{
+  background-color: #edf5ff;
+}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; /* IE11 */ scrollbar-width: none; /* Firefox 64 */ }
+nav{
+  a{
+    img{
+      height: 4.2vh;
+      position: absolute;
+      transform: translate(0,-50%);
+      top: 50%;
+      left: 2vw
+    }
+
+    svg{
+      position: absolute;
+      transform: translate(0,-50%);
+      top: 50%;
+      right: 4vw
+    }
+  }
+  .switch{
+    svg{
+      path{
+        color: black;
+      }
+    }
+  }
+  .switch-d{
+    svg{
+      path{
+        color: rgb(225, 225, 225);
+      }
+    }
+  }
+}
+#in{
+  overflow: auto;
+  height: 87%;
+  padding:10px 0;
+  //background-color: rgba(255, 255, 255, 0.15);
+
+  .line-s{
+    text-align: center
+  }
+  // 每一行的行约束
+  .line {
+    width: 100%;
+    overflow: auto;
+
+    .card-s {
+      display: inline-block;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: black;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-s-d {
+      display: inline-block;
+      background-color: rgb(33, 37, 40);
+      color: rgb(225, 225, 225);
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-gpt {
+      background-color: white;
+      border: 1px black;
+      color: black;
+      float: left;
+      max-width: 90%;
+      min-width: 0;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-gpt-d {
+      background-color: rgb(33, 37, 40);
+      border: 1px black;
+      color: rgb(225, 225, 225);
+      float: left;
+      max-width: 90%;
+      min-width: 0;
+      box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);
+    }
+
+    .card-me {
+      background-color: rgb(110, 223, 246);
+      color: black;
+      float: right;
+      max-width: 90%;
+      min-width: 0;
+      box-shadow: 0 0 3px rgb(110, 223, 246);
+    }
+
+    .card-me-d {
+      background-color: rgb(66, 35, 119);
+      color: rgb(225, 225, 225);
+      float: right;
+      max-width: 90%;
+      min-width: 0;
+      box-shadow: 0 0 3px rgb(82, 44, 150);
+    }
+
+    // 通用卡片
+    .card {
+      margin: 12px;
+      border-radius: 10px;
+      padding: 12px 12px 10px;
+      position: relative;
+    }
+
+    .init{
+      // 字体和复制按钮
+      pre{
+        margin: 0;
+        white-space: pre-wrap; /* 按照预格式化文本显示，超出宽度自动换行*/
+        overflow-x: auto;     /* 超出容器宽度横向滚动条 */
+
+        // 代码的显示效果
+        .hljs{
+          padding-right: 34px;
+        }
+        .hljs-w{
+          background-color: #f6f9fd;
+
+          .hljs-addition,.hljs-built_in,.hljs-bullet,.hljs-code{
+            color: #5e3bde;
+          }
+          .hljs-link,.hljs-regexp,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-symbol,.hljs-template-variable,.hljs-variable{
+            color: #ef0000;
+          }
+          .hljs-literal{
+            color: #ff7934;
+          }
+        }
+      }
+
+      div{
+        position: relative;
+        border-radius: 6px;
+
+        .copy{
+          position: absolute;
+          top: 10px;
+          right: 12px;
+        }
+        .pre1{
+          border-radius: 6px;
+        }
+      }
+
+    }
+  }
+}
+// 输入框
+.under{
+  .row{
+    position: absolute;
+    bottom: 0;
+    left: 12px;
+    width: 100%;
+
+    #inputs{
+      height: 55px;
+      box-shadow: 0 0 3px gray;
+      border-radius: 6px;
+
+      textarea{
+        resize: none;
+        height: 100%;
+        border: black;
+        position: absolute;
+        bottom: 0;left: 50%;
+        transform: translate(-50%,0);
+      }
+      label{
+        position: absolute;
+        left: 0
+      }
+      #send{
+        position: absolute;
+        bottom: 15px;
+        right: 20px
+      }
+    }
+  }
+}
+// 右半部分工具框和菜单栏
+.tags-menu{
+  padding: 20px;
+  background-color: #dceafc;
+  border-radius: 10px;
+  box-shadow: 0 0 2px gray;
+}
+
+// 弹出框
+.alert0{
+  display: none;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 9999;
+  padding: 10px 30px;
+  border-radius: 10px;
+}
