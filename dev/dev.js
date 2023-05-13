@@ -8,7 +8,8 @@ const config = JSON.parse(String(fs.readFileSync("./config.json")))
 console.log("读取配置文件成功")
 
 // 修改页面的访问目标数据
-fs.writeFileSync("./page/ts/Val.ts",`const val = {"url":"${config["url"]}"}\nexport default val`)
+const url = `${config["httpsO"]?"https":"http"}://${config["serverIP"]}:${config["point"]}/bing`
+fs.writeFileSync("./page/ts/Val.ts",`const val = {"url":"${url}"}\nexport default val`)
 console.log("写入配置文件完成")
 
 // 开发服务器运行
@@ -22,4 +23,4 @@ shell.exec(s, (code, stdout, stderr) => {
     console.error(`stderr: ${stderr}`);
 })
 // 端口监听并释放网页
-server(config.point)
+server(config.point,config.url)

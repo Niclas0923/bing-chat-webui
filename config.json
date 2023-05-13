@@ -1,5 +1,6 @@
 {
     "url":"",
+    "serverIP": "localhost",
     "point": 18080,
     "httpsO": false,
     "options": {
