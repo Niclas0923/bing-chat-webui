@@ -88,7 +88,7 @@ class Center {
                     case "user":
                         this.card.creatM(i[1]);break
                     case "assistant":
-                        this.card.creatC(i.length == 2?i[1]:(i[1]+"\n\n"+i[2]));break
+                        this.card.creatC(i.length == 2?i[1]:(i[1]+"[^h^]"+i[2]));break
                 }
             }
         }

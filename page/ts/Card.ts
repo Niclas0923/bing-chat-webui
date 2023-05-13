@@ -248,6 +248,7 @@ class Card {
     }
 
     addEle(val:string,jqueryE:JQuery<HTMLElement>){
+        val = val.replace(/\[\^h\^\]/g, "<hr>");
         val = val.replace(/(\[\^[0-9]+\^\]\s*)+/g, " $&");
         val = val.replace(/\[\^(\d+)\^\]/g, '<span class="badge rounded-pill bg-primary">$1</span>');
         jqueryE.html(val)
