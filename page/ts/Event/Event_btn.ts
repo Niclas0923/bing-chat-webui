@@ -16,7 +16,7 @@ class Event_btn{
         this.e.click($("#reset"),()=>{
             this.cen.lS.reset(this.cen.sex)
             this.cen.draw(true)
-            this.cen.card.creatC("我已经完成了信息的清空，有什么问题都可以通过下方进行提问。",false)
+            this.cen.card.creatC("我已经完成了信息的清空，有什么问题都可以通过下方进行提问。",[],false)
         })
     }
 

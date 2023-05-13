@@ -11,7 +11,7 @@ class Card {
         this.center = center
     }
 
-    creatCardA(classV:string,head:string,val:string,fast = true){
+    creatCardA(classV:string,head:string,val:string,valDN = [],fast = true){
         const t = this
         // 制作插入的基本框架
         const isS = (head === "System")
@@ -19,24 +19,14 @@ class Card {
         const e1 = [`<div class="${classV+(t.center.night.now?"-d":"")}">`,`</div>`]
         const e2 = isS? `<h4>${head}</h4>`: ""
         const e3 =`<div class="init"></div>`
-        let e = e0[0]+e1[0]+e2+e3+e1[1]+e0[1]
+        const e4 = `<div style="display: none">${JSON.stringify(valDN)}</div>`
+        let e = e0[0]+e1[0]+e2+e3+e4+e1[1]+e0[1]
         // 把框架插入
         this.$in.append(e)
         // 记录需要插入的地方
         const $e = $('#in .init:last')
         // 数据处理
         val = S(val).escapeHTML().s
-        let match;
-        let count = 1;
-        while ((match = /\[\d*?\.\s*(.*?)\]\((.*?)\)/g.exec(val)) !== null) {
-            const str = match[0];
-            const link = match[2];
-            const name = match[1];
-            const replaced = `<a href="${link}" target="_blank" title="${link}">${name}</a>`;
-            val = val.replace(str, `${count}. ${replaced}`);
-            count++;
-        }
-        val = val.replace(/\[(.+)\]\((http[s]?:\/\/.+)\)/g, '<a href="$2" target="_blank" title="$2">$1</a>');
         const [arr1,arr2] = this.extractArray(val)
         // 根据需求选择动态显示还是直接显示
         if (fast){
@@ -55,6 +45,18 @@ class Card {
                         `</pre>`+
                         `<div style="display: none;">${arr1[i]}</div>`+
                     `</div>`
+            }
+            // 如果存在链接，这个对象就不会为空
+            if (valDN.length !==0){
+                // 先添加一个分割线
+                valO+=`<hr>`
+                // 之后制作网址链接在下面
+                let u = "<pre>"
+                for (const i in valDN) {
+                    u+=`${parseInt(i)+1}. <a href="${valDN[i]["seeMoreUrl"]}" target="_blank" class="under-a" title="${valDN[i]["seeMoreUrl"]}">${valDN[i]["providerDisplayName"]}</a> `
+                }
+                u+="</pre>"
+                valO+=u
             }
             t.addEle(valO,$e)
             t.$in.stop(true).animate({scrollTop:t.$in[0].scrollHeight})
@@ -100,6 +102,18 @@ class Card {
                         clearInterval(i)
                         // @ts-ignore
                         let x = t.$in.prop("scrollHeight") - t.$in.scrollTop() == t.$in.height();
+                        // 如果存在链接，这个对象就不会为空
+                        if (valDN.length !==0){
+                            // 先添加一个分割线
+                            valL+=`<hr>`
+                            // 之后制作网址链接在下面
+                            let u = "<pre>"
+                            for (const i in valDN) {
+                                u+=`${parseInt(i)+1}. <a href="${valDN[i]["seeMoreUrl"]}" target="_blank" class="under-a" title="${valDN[i]["seeMoreUrl"]}">${valDN[i]["providerDisplayName"]}</a> `
+                            }
+                            u+="</pre>"
+                            valL+=u
+                        }
                         t.addEle(valL,$e)
                         if(x) t.$in.stop(true).animate({scrollTop:t.$in[0].scrollHeight},time)
                         return 0
@@ -131,14 +145,14 @@ class Card {
             "System",val)
     }
 
-    creatC(val:string,fast=true){
+    creatC(val:string,url=[],fast=true){
         this.creatCardA("card card-gpt",
-            "chartGPT",val,fast)
+            "chartGPT",val,url,fast)
     }
 
     creatM(val:string,fast=true){
         this.creatCardA("card card-me",
-            "我",val,fast)
+            "我",val,[],fast)
     }
 
     // removeLast(){
@@ -248,9 +262,11 @@ class Card {
     }
 
     addEle(val:string,jqueryE:JQuery<HTMLElement>){
-        val = val.replace(/\[\^h\^\]/g, "<hr>");
+        // 对对话中的标签进行制作
         // val = val.replace(/(\[\^[0-9]+\^\]\s*)+/g, " $&");
-        val = val.replace(/\[\^(\d+)\^\]/g, '<a target="_blank"><span class="badge rounded-pill text-bg-primary">$1</span></a>');
+        val = val.replace(/\[\^(\d+)\^]/g, '<a target="_blank" class="tag-i"><span class="badge text-bg-primary">$1</span></a>');
+        // 替换链接
+        val = val.replace(/\[(.+)]\((http[s]?:\/\/.+)\)/g, '<a href="$2" target="_blank" title="$2">$1</a>');
         jqueryE.html(val)
         this.center.event.copyE()
         this.center.event.badgeE()

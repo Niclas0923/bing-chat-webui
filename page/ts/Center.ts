@@ -3,7 +3,6 @@ import Events from "./Event/Event";
 import Send from "./Send";
 import localStorage from "./LocalStorage";
 import NightMode from "./NightMode";
-import val from "./Val";
 
 class Center {
     lS
@@ -88,11 +87,13 @@ class Center {
                     case "user":
                         this.card.creatM(i[1]);break
                     case "assistant":
-                        this.card.creatC(i.length == 2?i[1]:(i[1]+"[^h^]"+i[2]));break
+                        if (i.length == 2) this.card.creatC(i[1])
+                        else this.card.creatC(i[1],i[2])
+                        break
                 }
             }
         }
-        if (!fromReSet) this.card.creatC("我已经完成了所有信息的读取，有什么问题都可以直接在下方向我提问。",false)
+        if (!fromReSet) this.card.creatC( "我已经完成了所有信息的读取，有什么问题都可以直接在下方向我提问。",[],false)
     }
 
 }

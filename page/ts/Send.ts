@@ -24,9 +24,8 @@ class Send {
             // 发送成功回调
             "success":function(d){
                 console.log(d.text)
-                if (d["detail"]["adaptiveCards"][0]["body"].length!=1){
-                    console.log(d["detail"]["adaptiveCards"][0]["body"][1]["text"])
-                }
+                const urlA = d["detail"]["sourceAttributions"]
+                if (urlA.length!=0) console.log(urlA)
                 canCallBack(d)
             },
             // 超时时间

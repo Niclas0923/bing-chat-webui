@@ -68,10 +68,10 @@ class Events {
                         if (data){
                             // 返回成功
                             const d = ["assistant",data["text"]]
-                            if (data["detail"]["adaptiveCards"][0]["body"].length!=1){
-                                d[2] = data["detail"]["adaptiveCards"][0]["body"][1]["text"]
+                            if (data["detail"]["sourceAttributions"].length!=1){
+                                d[2] = data["detail"]["sourceAttributions"]
                             }
-                            this.center.card.creatC(d.length== 2?d[1]:(d[1]+"[^h^]"+d[2]),false)
+                            this.center.card.creatC(d[1],d.length== 2?[]:d[2],false)
                             // @ts-ignore 确认一定会存在这项所以直接屏蔽
                             val.history[val.history.length] = d
                             // @ts-ignore 保存这个返回对象
@@ -325,23 +325,14 @@ class Events {
     // 设置徽章的点击函数
     badgeE(){
         $('.badge').each(function(i, el) {
-            // 获取这个框的所有链接信息
-            // @ts-ignore
-            let val = $($(el).parent().parent().parent().find("pre:last")[0]).html()
-            const match = val.match(/Learn more: ([^\n]*)$/m);
-            val = match?match[1]:""
-
-            // 根据序号筛选网址
-            let index = parseInt(el.innerHTML)
-            let pattern = new RegExp(`${index}\\.\\s*<a\\s+href="(.*?)".*?>`, 'i');
-            let result = pattern.exec(val);
-            let url = ""
-            const a = /\[\d\]: (http.+?) \\"(.+?)\\"\\n/gm
-            if (result && result.length > 0) url = result[1]
+            const val = JSON.parse($($(el).parent().parent().parent().parent().find("div:Last")).html())
+            let index = parseInt(el.innerHTML) - 1
+            const url = val[index]["seeMoreUrl"]
+            const valIn = val[index]["providerDisplayName"]
             // 设置网址
             $($(el).parent()[0])
                 .attr('href', url)
-                .attr('title', url)
+                .attr('title', valIn)
         });
     }
 
