@@ -24,6 +24,9 @@ class Send {
             // 发送成功回调
             "success":function(d){
                 console.log(d.text)
+                if (d["detail"]["adaptiveCards"][0]["body"].length!=1){
+                    console.log(d["detail"]["adaptiveCards"][0]["body"][1]["text"])
+                }
                 canCallBack(d)
             },
             // 超时时间

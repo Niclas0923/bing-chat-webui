@@ -68,7 +68,7 @@ class Events {
                         if (data){
                             // 返回成功
                             const d = ["assistant",data["text"]]
-                            if (data["detail"]["sourceAttributions"].length!=0){
+                            if (data["detail"]["adaptiveCards"][0]["body"].length!=1){
                                 d[2] = data["detail"]["adaptiveCards"][0]["body"][1]["text"]
                             }
                             this.center.card.creatC(d.length== 2?d[1]:(d[1]+"\n\n"+d[2]),false)

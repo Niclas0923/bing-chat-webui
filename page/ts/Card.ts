@@ -26,10 +26,9 @@ class Card {
         const $e = $('#in .init:last')
         // 数据处理
         val = S(val).escapeHTML().s
-        const regex = /\[\d*?\.\s*(.*?)\]\((.*?)\)/g;
         let match;
         let count = 1;
-        while ((match = regex.exec(val)) !== null) {
+        while ((match = /\[\d*?\.\s*(.*?)\]\((.*?)\)/g.exec(val)) !== null) {
             const str = match[0];
             const link = match[2];
             const name = match[1];
@@ -37,8 +36,7 @@ class Card {
             val = val.replace(str, `${count}. ${replaced}`);
             count++;
         }
-        const regex2 = /\[\^(\d+)\^\]/g;
-        val = val.replace(regex2, '<span class="badge rounded-pill bg-primary">$1</span>');
+        val = val.replace(/\[(.+)\]\((http[s]?:\/\/.+)\)/g, '<a href="$2" target="_blank" title="$2">$1</a>');
         const [arr1,arr2] = this.extractArray(val)
         // 根据需求选择动态显示还是直接显示
         if (fast){
@@ -250,6 +248,8 @@ class Card {
     }
 
     addEle(val:string,jqueryE:JQuery<HTMLElement>){
+        val = val.replace(/(\[\^[0-9]+\^\]\s*)+/g, " $&");
+        val = val.replace(/\[\^(\d+)\^\]/g, '<span class="badge rounded-pill bg-primary">$1</span>');
         jqueryE.html(val)
         this.center.event.copyE()
         $(".line:last pre").filter(function() {
