@@ -249,10 +249,11 @@ class Card {
 
     addEle(val:string,jqueryE:JQuery<HTMLElement>){
         val = val.replace(/\[\^h\^\]/g, "<hr>");
-        val = val.replace(/(\[\^[0-9]+\^\]\s*)+/g, " $& ");
-        val = val.replace(/\[\^(\d+)\^\]/g, '<span class="badge rounded-pill bg-primary">$1</span>');
+        // val = val.replace(/(\[\^[0-9]+\^\]\s*)+/g, " $&");
+        val = val.replace(/\[\^(\d+)\^\]/g, '<a target="_blank"><span class="badge rounded-pill text-bg-primary">$1</span></a>');
         jqueryE.html(val)
         this.center.event.copyE()
+        this.center.event.badgeE()
         $(".line:last pre").filter(function() {
             return $(this).has("code").length > 0;
         }).each(function() {
