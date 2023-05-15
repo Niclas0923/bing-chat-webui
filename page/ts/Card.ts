@@ -32,7 +32,7 @@ class Card {
         if (fast){
             let valO = ""
             for (const i in arr1) {
-                if (arr2[i]==="0") valO+=`<pre>${arr1[i]}</pre>`
+                if (arr2[i]==="0") valO+=`<p>${arr1[i]}</p>`
                 else valO+=
                     `<div>`+
                         `<a href="#" class="copy">`+
@@ -47,17 +47,7 @@ class Card {
                     `</div>`
             }
             // 如果存在链接，这个对象就不会为空
-            if (valDN.length !==0){
-                // 先添加一个分割线
-                valO+=`<hr>`
-                // 之后制作网址链接在下面
-                let u = "<pre>"
-                for (const i in valDN) {
-                    u+=`${parseInt(i)+1}. <a href="${valDN[i]["seeMoreUrl"]}" target="_blank" class="under-a" title="${valDN[i]["seeMoreUrl"]}">${valDN[i]["providerDisplayName"]}</a> `
-                }
-                u+="</pre>"
-                valO+=u
-            }
+            if (valDN.length !==0) valO = t.addA(valO,valDN)
             t.addEle(valO,$e)
             t.$in.stop(true).animate({scrollTop:t.$in[0].scrollHeight})
         }else {
@@ -85,7 +75,7 @@ class Card {
                 a2+=1
                 // console.log(a2,l1,l)
                 if (a2 >= l1+1){
-                    valL+=arr2[a1]==="0"?`<pre>${arr1[a1]}</pre>`:
+                    valL+=arr2[a1]==="0"?`<p>${arr1[a1]}</p>`:
                         `<div>`+
                             `<a href="#" class="copy">`+
                                 `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-files" viewBox="0 0 16 16" data-darkreader-inline-fill="" style="--darkreader-inline-fill:currentColor;">`+
@@ -103,17 +93,7 @@ class Card {
                         // @ts-ignore
                         let x = t.$in.prop("scrollHeight") - t.$in.scrollTop() == t.$in.height();
                         // 如果存在链接，这个对象就不会为空
-                        if (valDN.length !==0){
-                            // 先添加一个分割线
-                            valL+=`<hr>`
-                            // 之后制作网址链接在下面
-                            let u = "<pre>"
-                            for (const i in valDN) {
-                                u+=`${parseInt(i)+1}. <a href="${valDN[i]["seeMoreUrl"]}" target="_blank" class="under-a" title="${valDN[i]["seeMoreUrl"]}">${valDN[i]["providerDisplayName"]}</a> `
-                            }
-                            u+="</pre>"
-                            valL+=u
-                        }
+                        if (valDN.length !==0) val = t.addA(val,valDN)
                         t.addEle(valL,$e)
                         if(x) t.$in.stop(true).animate({scrollTop:t.$in[0].scrollHeight},time)
                         return 0
@@ -124,7 +104,7 @@ class Card {
                 }
                 let valX
                 if (arr2[a1]==="0"){
-                    valX = `<pre>${arr1[a1].substring(0, a2)}</pre>`
+                    valX = `<p>${arr1[a1].substring(0, a2)}</p>`
                 }else {
                     valX = `<pre class="pre1"><code class="${t.center.night.now?"":"hljs-w "}language-${arr2[a1]}">${arr1[a1].substring(0, a2)}</code></pre>`
                 }
@@ -237,7 +217,7 @@ class Card {
                 console.log("没有匹配项");
             }
         }
-        arr0[arr0.length] = str
+        arr0[arr0.length] = str.includes("\n") ? str.replace(/(^\n*)|(\n*$)/g, "\n") : str;
         arr1[arr1.length] = "0"
         // console.log(arr0,arr1,0)
 
@@ -267,6 +247,7 @@ class Card {
         val = val.replace(/\[\^(\d+)\^]/g, '<a target="_blank" class="tag-i"><span class="badge text-bg-primary">$1</span></a>');
         // 替换链接
         val = val.replace(/\[(.+?)]\((https?:\/\/.+?)\)/gm, '<a href="$2" target="_blank" title="$2">$1</a>');
+        val = val.replace(/\*\*(.+?)\*\*/gm, '<strong>$1</strong>');
         jqueryE.html(val)
         this.center.event.copyE()
         this.center.event.badgeE()
@@ -276,6 +257,21 @@ class Card {
             // console.log(this)
             hljs.highlightElement($(this).children()[0])
         });
+    }
+
+    // 添加a链接
+    addA(val:string,arr:never[]){
+        // 先添加一个分割线
+        val+=`<hr>`
+        // 之后制作网址链接在下面
+        let u = "<pre style='overflow: hidden;padding-bottom: 1px'>"
+        for (const i in arr) {
+            u+=`<strong>${parseInt(i)+1}.</strong><a href="${arr[i]["seeMoreUrl"]}" target="_blank" class="under-a" title="${arr[i]["seeMoreUrl"]}">${arr[i]["providerDisplayName"]}</a>\n`
+            // u+=`<!--<a href="${arr[i]["seeMoreUrl"]}" target="_blank" class="under-a" title="${arr[i]["seeMoreUrl"]}">${arr[i]["providerDisplayName"]}</a>-->`
+        }
+        u+="</pre>"
+        val+=u
+        return val
     }
 
 }

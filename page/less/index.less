@@ -122,6 +122,7 @@ nav{
       // 字体和复制按钮
       pre{
         margin: 0;
+        font-size: 13px;
         white-space: pre-wrap; /* 按照预格式化文本显示，超出宽度自动换行*/
         overflow-x: auto;     /* 超出容器宽度横向滚动条 */
 
@@ -142,18 +143,22 @@ nav{
             color: #ff7934;
           }
         }
-        // 下部的标签
-        .under-a {
-          word-break: break-all;
-          padding: 3px 3px;
+        code{
+          font-size: 13px;
         }
+      }
+      p{
+        margin: 0 2px;
+        white-space: pre-wrap; /* 按照预格式化文本显示，超出宽度自动换行*/
+        overflow-x: auto;     /* 超出容器宽度横向滚动条 */
+        padding-bottom: 1px;
+        font-size: 15px;
+
         // 标签设置
         .tag-i{
           margin: 0 4px;
         }
-        a{
-          word-break: break-all;
-        }
+
       }
 
       div{
@@ -227,5 +232,11 @@ nav{
 
 // 分割线
 hr{
-  margin: 8px 0;
+  margin: 15px 0;
+}
+
+// 下部的标签
+.under-a {
+  padding: 3px 3px;
+  text-decoration:none;
 }
