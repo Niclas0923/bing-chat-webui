@@ -24,6 +24,7 @@ class Events {
         });
 
         this.inputShort = this.inputA()
+        this.btn.export()
         this.btnG()
     }
 
@@ -310,7 +311,7 @@ class Events {
     btnG(){
         const t = this
         const c = t.center
-        $('select').on('change', function(event) {
+        $('select').on('change', function() {
             const toId = parseInt(String($(this).val()))
             const val = c.lS.read(c.sex)
             // @ts-ignore

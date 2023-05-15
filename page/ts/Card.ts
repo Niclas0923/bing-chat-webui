@@ -145,49 +145,6 @@ class Card {
         })
     }
 
-    creatInput(){
-        this.creatSI("inputSet","sendSet","输入system","输入")
-        const cen = this.center
-        $("#sendSet").on("click",function (e) {
-            e.preventDefault()
-            const val = String($("#inputSet").val())
-            const valS = cen.lS.read(cen.sex)
-            if (valS){
-                // @ts-ignore
-                if(valS["chat"].length === 0){
-                    if (val!.length !== 0){
-                        $("#sendSet").off('click');
-                        // @ts-ignore
-                        valS["chat"] = [["system",val]]
-                        cen.lS.write(cen.sex,valS)
-                        cen.draw()
-                    }else {
-                        cen.event.notice("danger","请输入内容")
-                    }
-                }else {
-                    cen.event.notice("danger","已经有过对话,重新创建.")
-                }
-            }
-        })
-    }
-
-    creatSI(id_ip:string,id_btn:string,val_ip:string,val_send:string){
-        const e =
-            "<div class=\"line line-s\">"+
-                `<div class="card card-s${this.center.night.now?"-d":""}">`+
-                    "<h5>System</h5>"+
-                    "<div class=\"input-group mb-3\">"+
-                        `<input type="text" class="form-control" placeholder="${val_ip}" id="${id_ip}"  onkeydown="if (event.keyCode===13)document.getElementById('${id_btn}').click()">`+
-                        `<button class="btn btn-success" type="button" id="${id_btn}">${val_send}</button>`+
-                    "</div>"+
-                "</div>"+
-            "</div>"
-        this.$in.append(e)
-            .stop(true)
-            .animate({
-                scrollTop:this.$in[0].scrollHeight
-            })
-    }
 
     // 根据信息计算出两个数组，一个数组是信息，一个是特征值
     extractArray(val:string){

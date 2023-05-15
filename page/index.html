@@ -99,16 +99,25 @@
                             </div>
                         </div>
                     </div>
-                    <div style="height: 1.5vh"></div>
+                    <div style="height: 2vh"></div>
                     <div class="row">
-                        <div class="col-12">
-                            <div class="list-group">
-                                <a href="#" class="list-group-item list-group-item-action text-center" id="rename">重命名</a>
-                                <a href="#" class="list-group-item list-group-item-action text-center" id="addTo">添加到单项</a>
-                            </div>
+                        <div class="input-group mb-3" id="reN">
+                            <input type="text" class="form-control" placeholder="重命名" aria-label="Recipient's username" aria-describedby="button-addon2" onkeydown="if (event.keyCode===13)document.getElementById('button-addon2').click()">
+                            <button class="btn btn-primary" type="button" id="button-addon2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="input-group mb-3" id="addTo">
+                            <input type="text" class="form-control" placeholder="添加到单项" aria-label="Recipient's username" aria-describedby="button-addon3" onkeydown="if (event.keyCode===13)document.getElementById('button-addon3').click()">
+                            <button class="btn btn-primary" type="button" id="button-addon3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+                                </svg>
+                            </button>
                         </div>
                     </div>
-                    <div style="height: 1.5vh"></div>
                     <div class="row" style="padding: 0 12px">
                         <select class="form-select" aria-label="Default select example">
                             <option value="0">创造</option>

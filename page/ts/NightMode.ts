@@ -44,6 +44,11 @@ class NightMode {
             $(".card-s").removeClass("card-s").addClass("card-s-d")
             $(".card-gpt").removeClass("card-gpt").addClass("card-gpt-d")
             $(".card-me").removeClass("card-me").addClass("card-me-d")
+            // 工具栏
+            $("#button-addon2,#button-addon3")
+                .removeClass("btn-primary")
+                .addClass("btn-secondary")
+                .addClass("bg-dark")
             // 卡片
             $(".tags-menu").addClass("bg-dark")
             $(".tags-menu h5").css("color","rgb(225, 225, 225)")
@@ -83,6 +88,11 @@ class NightMode {
             $(".card-s-d").removeClass("card-s-d").addClass("card-s")
             $(".card-gpt-d").removeClass("card-gpt-d").addClass("card-gpt")
             $(".card-me-d").removeClass("card-me-d").addClass("card-me")
+            // 工具栏
+            $("#button-addon2,#button-addon3")
+                .addClass("btn-primary")
+                .removeClass("btn-secondary")
+                .removeClass("bg-dark")
             // 卡片
             $(".tags-menu").removeClass("bg-dark")
             $(".tags-menu h5").css("color","black")

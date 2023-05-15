@@ -9,6 +9,8 @@ class Event_btn{
         this.cen = e.center
 
         this.switchC()
+        this.rename()
+        this.addTo()
     }
 
     // 设置清空按钮的点击函数
@@ -34,51 +36,45 @@ class Event_btn{
 
     // 设置重命名按钮的点击函数
     rename(){
-        const cen = this.cen
-        this.e.click($("#rename"),()=>{
-            cen.card.creatSI("input-name",'input-name-send','输入名称','重命名')
-            this.e.click($("#input-name-send"),()=>{
-                const id = cen.sex
-                this.e.testName($("#input-name"),(val,list)=>{
-                    $("#input-name-send").off('click');
-                    // 在list中替换这一项
-                    list[list.indexOf(id)] = val
-                    cen.lS.write("list", {"names":list})
-                    // 在is中删除这一项并写入新的
-                    const valOne = cen.lS.read(id)
-                    if (valOne) cen.lS.write(val,valOne)
-                    cen.lS.onlyRemove(id)
-                    // 重置画面
-                    cen.sex = val
-                    cen.draw()
-                    cen.creatTags()
-                })
+        const c = this.cen
+        this.e.click($("#button-addon2"),()=>{
+            const id = c.sex
+            this.e.testName($("#reN input"),(val,list)=>{
+                $("#reN input").val("")
+                // 在list中替换这一项
+                list[list.indexOf(id)] = val
+                c.lS.write("list", {"names":list})
+                // 在is中删除这一项并写入新的
+                const valOne = c.lS.read(id)
+                if (valOne) c.lS.write(val,valOne)
+                c.lS.onlyRemove(id)
+                // 重置画面
+                c.sex = val
+                c.draw()
+                c.creatTags()
             })
         })
     }
 
     // 设置添加到单项按钮的点击函数
     addTo(){
-        const cen = this.cen
-        this.e.click($("#addTo"), ()=>{
-            cen.card.creatSI("input-name-a",'input-name-add','输入名称','添加')
-            this.e.click($("#input-name-add"),()=>{
-                this.e.testName($("#input-name-a"),(val,list)=>{
-                    $("#input-name-add").off('click');
-                    // 向后写入list并保存
-                    list[list.length] = val
-                    cen.lS.write("list", {"names":list})
-                    // 读取当前内容再清除当前内容
-                    const val0 = cen.lS.read(cen.sex)
-                    if (val0){
-                        cen.lS.write(val, val0)
-                        cen.lS.reset(cen.sex)
-                        cen.sex = val
-                        this.e.notice("success",`当前为${cen.sex}`)
-                        cen.creatTags()
-                        cen.draw()
-                    }
-                })
+        const c = this.cen
+        this.e.click($("#button-addon3"),()=>{
+            this.e.testName($("#addTo input"),(val,list)=>{
+                $("#addTo input").val("")
+                // 向后写入list并保存
+                list[list.length] = val
+                c.lS.write("list", {"names":list})
+                // 读取当前内容再清除当前内容
+                const val0 = c.lS.read(c.sex)
+                if (val0){
+                    c.lS.write(val, val0)
+                    c.lS.reset(c.sex)
+                    c.sex = val
+                    this.e.notice("success",`当前为${c.sex}`)
+                    c.creatTags()
+                    c.draw()
+                }
             })
         })
     }

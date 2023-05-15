@@ -50,18 +50,17 @@ class Center {
             }
             $m.html(a1)
             if (["bing"].indexOf(this.sex) !== -1){
-                // 前两项
-                $("#addTo,#export").removeClass("disabled")
-                this.event.btn.addTo()
-                this.event.btn.export()
-                $("#remove,#rename").addClass("disabled")
+                // bing
+                $("#export").removeClass("disabled")
+                $("#remove").addClass("disabled")
+                $("#reN").css({"display": "none"})
+                $("#addTo").css({"display": ""})
             }else {
                 // 添加项
-                $("#rename,#remove,#export").removeClass("disabled")
-                this.event.btn.rename()
+                $("#remove,#export").removeClass("disabled")
                 this.event.btn.remove()
-                this.event.btn.export()
-                $("#addTo").addClass("disabled")
+                $("#reN").css({"display": ""})
+                $("#addTo").css({"display": "none"})
             }
             // 都允许清空
             this.event.btn.reSet()
