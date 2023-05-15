@@ -217,7 +217,7 @@ class Card {
                 console.log("没有匹配项");
             }
         }
-        arr0[arr0.length] = str.replace(/\\n+/g, "\\n")
+        arr0[arr0.length] = str.replace(/\n+/gm, "\n")
         arr1[arr1.length] = "0"
         // console.log(arr0,arr1,0)
 
