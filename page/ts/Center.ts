@@ -77,7 +77,7 @@ class Center {
         const $btnG = $("#btnG .btn")
         $btnG.removeClass("active")
         // @ts-ignore
-        $($btnG[nVal["mod"]]).addClass("active")
+        $("select").val(`${nVal["mod"]}`).trigger('change');
         if (nVal!==null){
             // @ts-ignore
             for (const i of nVal.history) {

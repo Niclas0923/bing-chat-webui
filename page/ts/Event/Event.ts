@@ -56,7 +56,7 @@ class Events {
                     $("#in").append(e)
                     const $l = $("#loading")
 
-                    const mod = parseInt($("#btnG .active")[0].id.slice(-1))
+                    const mod = parseInt(String($('select').val()))
                     // @ts-ignore
                     const obj = { data : JSON.stringify(val.lastObj), model : mod, val : input,}
 
@@ -310,14 +310,18 @@ class Events {
     btnG(){
         const t = this
         const c = t.center
-        $("#btnG .btn").on("click",function (){
+        $('select').on('change', function(event) {
+            const toId = parseInt(String($(this).val()))
             const val = c.lS.read(c.sex)
             // @ts-ignore
-            if (val["history"].length === 0){
-                $("#btnG .btn").removeClass("active")
-                $(this).addClass("active")
-            }else{
-                t.notice("danger","已有对话过，无法更改模式")
+            const mod = parseInt(val["mod"])
+            // @ts-ignore  如果有历史
+            if (val["history"].length !== 0 ){
+                // 并且切换的不是自己的id
+                if (mod !== toId){
+                    t.notice("danger", "已有对话过，无法更改模式");
+                    $(this).val(`${mod}`).trigger('change');
+                }
             }
         })
     }
