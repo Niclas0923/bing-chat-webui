@@ -93,7 +93,7 @@ class Card {
                         // @ts-ignore
                         let x = t.$in.prop("scrollHeight") - t.$in.scrollTop() == t.$in.height();
                         // 如果存在链接，这个对象就不会为空
-                        if (valDN.length !==0) val = t.addA(val,valDN)
+                        if (valDN.length !==0) valL = t.addA(valL,valDN)
                         t.addEle(valL,$e)
                         if(x) t.$in.stop(true).animate({scrollTop:t.$in[0].scrollHeight},time)
                         return 0
