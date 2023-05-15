@@ -266,7 +266,7 @@ class Card {
         // val = val.replace(/(\[\^[0-9]+\^\]\s*)+/g, " $&");
         val = val.replace(/\[\^(\d+)\^]/g, '<a target="_blank" class="tag-i"><span class="badge text-bg-primary">$1</span></a>');
         // 替换链接
-        val = val.replace(/\[(.+)]\((http[s]?:\/\/.+)\)/g, '<a href="$2" target="_blank" title="$2">$1</a>');
+        val = val.replace(/\[(.+?)]\((https?:\/\/.+?)\)/gm, '<a href="$2" target="_blank" title="$2">$1</a>');
         jqueryE.html(val)
         this.center.event.copyE()
         this.center.event.badgeE()
